@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import Home from '../views/Home.vue'
+import admin from '../views/admin.vue'
 
 const routes = [
   {
@@ -16,6 +17,11 @@ const routes = [
     component: function () {
       return import(/* webpackChunkName: "about" */ '../views/About.vue')
     }
+  },
+  {
+    path: '/admin/page',
+    name: 'admin',
+    component: admin
   }
 ]
 
