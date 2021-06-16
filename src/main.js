@@ -5,3 +5,12 @@ import store from './store'
 import axios from 'axios'
 
 createApp(App).use(store).use(router).mount('#app')
+
+router.onError((error) => {
+    const pattern = /Loading chunk (\d)+ failed/g;
+    const isChunkLoadFailed = error.message.match(pattern);
+    const targetPath = router.history.pending.fullPath;
+    if (isChunkLoadFailed) {
+    router.replace(targetPath);
+    }
+    });
