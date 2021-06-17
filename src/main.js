@@ -13,4 +13,4 @@ router.onError((error) => {
     if (isChunkLoadFailed) {
     router.replace(targetPath);
     }
-    });
+});

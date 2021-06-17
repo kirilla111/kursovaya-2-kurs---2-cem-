@@ -22,7 +22,12 @@ const routes = [
     path: '/admin',
     name: 'admin',
     component: admin
-  }
+  },
+  // {
+  //   path: '/page',
+  //   name: 'page',
+  //   component: Page
+  // }
 ]
 
 const router = createRouter({
