@@ -12,8 +12,12 @@
         />
         <button @click="addNewRow" class="actions__button">Add</button>
         <button @click="saveChanges" class="actions__button green">Save</button>
-        <button @click="cancelChanges" class="actions__button red">Cancel</button>
-        <div style="padding: 10px;text-align:right;">Total: {{filtered_food_info.length}}</div>
+        <button @click="cancelChanges" class="actions__button red">
+          Cancel
+        </button>
+        <div style="padding: 10px; text-align: right">
+          Total: {{ filtered_food_info.length }}
+        </div>
       </div>
 
       <div class="info__grid">
@@ -31,7 +35,7 @@
 
         <div
           class="grid__row"
-          v-bind:class="{ gray: index % 2 == 0 }" 
+          v-bind:class="{ gray: index % 2 == 0 }"
           v-for="(food, index) in filtered_food_info"
           :key="index"
         >
@@ -64,30 +68,20 @@
             step="0.01"
             v-model="food.price"
           />
-          <input
-            :id="5 + '' + index"
-            class="row__cell"
-            v-model="food.brand"
-          />
-          <input
-            :id="6 + '' + index"
-            class="row__cell"
-            v-model="food.image"
-          />
-          <div class="row__cell green">
+          <input :id="5 + '' + index" class="row__cell" v-model="food.brand" />
+          <input :id="6 + '' + index" class="row__cell" v-model="food.image" />
+          <div  @click="editRow(index)" class="row__cell green">
             <img
               src="https://i.stack.imgur.com/F2zuF.png"
               height="30"
               alt="Edit"
-              @click="editRow(index)"
             />
           </div>
-          <div class="row__cell red">
+          <div @click="deleteRow(index)" class="row__cell red">
             <img
               src="http://cdn.onlinewebfonts.com/svg/download_216356.png"
               height="32"
               alt="Delete"
-               @click="deleteRow(index)"
             />
           </div>
         </div>
@@ -141,8 +135,6 @@ export default {
   name: "admin",
   data() {
     return {
-      errorMsg: "",
-      successMsg: "",
       food_info: [],
       isAutorized: false,
       filter: "",
@@ -154,18 +146,18 @@ export default {
       return this.food_info.filter(
         (x) =>
           (x.food_name.toLowerCase().includes(keyword) ||
-          x.brand.toLowerCase().includes(keyword) ||
-          //x.id.toLowerCase().includes(keyword) ||
-          x.description.toLowerCase().includes(keyword) ||
-          //x.price.includes(keyword) ||
-          x.category.toLowerCase().includes(keyword)) &&
-          (x.updated != '3' )
+            x.brand.toLowerCase().includes(keyword) ||
+            //x.id.toLowerCase().includes(keyword) ||
+            x.description.toLowerCase().includes(keyword) ||
+            //x.price.includes(keyword) ||
+            x.category.toLowerCase().includes(keyword)) &&
+          x.updated != "3"
       );
       // return this.food_info.filter(function (elem) {
       //   if (filter === '') return true;
       //   else return elem.food_name.toLowerCase().indexOf(filter) > -1;
       // });
-    }
+    },
   },
   mounted: function () {
     //this.getTableData();
@@ -175,14 +167,13 @@ export default {
   // insert = 2;
   // delete = 3;
   methods: {
-     findIndex(id) {
-       var index = 0;
-       this.food_info.forEach(element => {
-         if (id === element.id)
-            return index;
-          index++
-       });
-       
+    findIndex(id) {
+      var index = 0;
+      this.food_info.forEach((element) => {
+        if (id === element.id) return index;
+        index++;
+      });
+
       // return this.food_info.filter(function (elem) {
       //   if (filter === '') return true;
       //   else return elem.food_name.toLowerCase().indexOf(filter) > -1;
@@ -203,84 +194,88 @@ export default {
 
       console.log(id);
       var i = 0;
-      this.food_info.forEach(element => {
-          if (element.id === id){
-            item = element;
-            index = i;
-          }
-          i++;
+      this.food_info.forEach((element) => {
+        if (element.id === id) {
+          item = element;
+          index = i;
+        }
+        i++;
       });
 
       console.log(item);
       // var filtered_food = this.filtered_food_info;
 
-      if (item.updated === '0')
-        item.updated = '1'
-      if (item.updated === '2')
-        item.updated = '2'
-      
+      if (item.updated === "0") item.updated = "1";
+      if (item.updated === "2") item.updated = "2";
 
-      item.food_name =  food_name;
-      item.description =  description;
-      item.category =  category;
-      item.price =  price;
-      item.brand =  brand;
-      item.image =  image;
-      
+      item.food_name = food_name;
+      item.description = description;
+      item.category = category;
+      item.price = price;
+      item.brand = brand;
+      item.image = image;
+
       this.food_info[index].food_name = food_name;
-      this.showModal(true);
+      this.showModal(true,'Successfully!');
     },
-    cancelChanges(){
+    cancelChanges() {
       this.getTableData();
     },
-    saveChanges(){
+    saveChanges() {
       var response = confirm("Are You sure?");
-      var params = {table: this.food_info, login: 'asd'};
-      console.log({params});
+      var params = { table: this.food_info };
+      console.log({ params });
       let vm = this;
-      if (response){
+      if (response) {
         axios
-        .get("http://localhost/afanasyev-project-php/admin_actions.php?action=write", {params})
-        .then(function (response) {
-          //console.log(response);
-          console.log(response.data);
-          console.log(response.data.errors);
-          console.log(response.data.updates);
-          //console.log(vm.isAutorized);
-          vm.food_info.forEach(element => {
-            element.updated = '0';
+          .get(
+            "http://localhost/afanasyev-project-php/admin_actions.php?action=write",
+            { params }
+          )
+          .then(function (response) {
+            //console.log(response);
+            console.log(response.data);
+            var e = response.data.errors;
+            var u = response.data.updates;
+            //console.log(vm.isAutorized);
+            if (e > 0) {
+              vm.showModal(false, `Errors: ${e}, Updates ${u}`);
+            }
+            else{
+              vm.showModal(true, `Errors: ${e}, Updates ${u}`);
+            }
+            vm.getTableData();
           });
-        });
-      }else{
-        
+      } else {
       }
     },
-    deleteRow(index){
-      this.filtered_food_info[index].updated = '3';
-      this.showModal(true);
+    deleteRow(index) {
+      this.filtered_food_info[index].updated = "3";
+      this.showModal(true,'Deleted!');
     },
-    addNewRow(){
+    addNewRow() {
       this.food_info[this.food_info.length] = {
-        id: `${parseInt(this.food_info[this.food_info.length-1].id) + 1}` ,
-        food_name: '',
-        description: '',
-        category: '',
-        price: '',
-        brand: '',
-        image: '',
-        updated: '2'
+        id: `${parseInt(this.food_info[this.food_info.length - 1].id) + 1}`,
+        food_name: "",
+        description: "",
+        category: "",
+        price: "",
+        brand: "",
+        image: "",
+        updated: "2",
       };
       //console.log(this.food_info);
       //console.log(this.food_info[this.food_info-1]);
     },
-    showModal(type) {
+    showModal(type, message) {
       var modal = document.getElementById("modal_window");
-      if (type){
-        modal.style.backgroundColor = '#00cc99'
-        modal.innerHTML = 'Success!'
-      }else{
-        modal.style.backgroundColor = '#ff3300'
-        modal.innerHTML = 'Error!'
+
+      modal.innerHTML = message;
+
+      if (type) {
+        modal.style.backgroundColor = "#00cc99";
+      } else {
+        modal.style.backgroundColor = "#ff3300";
       }
       modal.classList.add("show");
       setTimeout(function () {
@@ -288,13 +283,12 @@ export default {
       }, 2000);
     },
     TrySignUp: function () {
-      
       var login = document.getElementById("admin_login").value;
       let password = document.getElementById("admin_password").value;
 
-      if (login == '' || password == ''){
-        this.showModal(false);
-          return;
+      if (login == "" || password == "") {
+        this.showModal(false,'Error!');
+        return;
       }
 
       let vm = this;
@@ -306,11 +300,11 @@ export default {
         .then(function (response) {
           //console.log(response);
           if (response.data.session) {
-            vm.showModal(true);
             vm.isAutorized = response.data.session;
             vm.getTableData();
-          }else{
-            vm.showModal(false);
+            vm.showModal(true,'Welcome!');
+          } else {
+            vm.showModal(false,'Error!');
           }
           //console.log(vm.isAutorized);
         });
@@ -343,6 +337,8 @@ export default {
   gap: 20px;
   border-radius: 10px;
   border: 1px solid var(--border-color-primary);
+  margin-top: 30px;
+  margin-bottom: 22%;
 }
 .form__item {
   display: flex;
@@ -383,7 +379,7 @@ h1 {
   justify-content: space-between;
 }
 .container__options {
-  /* margin-top: 15%; */
+  margin-top: 30px;
   text-align: center;
 }
 /* @media  (max-width: 600px) {
@@ -486,19 +482,19 @@ h1 {
     opacity: 0;
   }
 }
-.gray .row__cell{
+.gray .row__cell {
   background-color: var(--hover-color);
 }
-.gray .green{
- background-color: #00cc99;
+.gray .green {
+  background-color: #00cc99;
 }
-.gray .red{
- background-color: #ff3300;
+.gray .red {
+  background-color: #ff3300;
 }
-.row__cell:hover{
+.row__cell:hover {
   background-color: var(--hover-color);
 }
-.gray .row__cell:hover{
+.gray .row__cell:hover {
   background-color: var(--color-primary);
 }
 </style>

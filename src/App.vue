@@ -1,45 +1,49 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </div>
-  <router-view/>
+  <m-header/>
+
+ 
+
+  <m-footer />
 </template>
 
-<style>
+<script>
+import mFooter from "./components/m-footer.vue";
+import mHeader from "./components/m-header.vue";
 
-:root{
-    --main-bg: #f5f5f5;
-    --color-primary: #f63;
-    --border-color-primary: #666666;
-    --hover-color: #ff7e53
+export default {
+  name: "app",
+  components: { mFooter, mHeader },
+  
+};
+</script>
+
+<style>
+body {
+  padding: 0;
+  margin: 0;
+}
+:root {
+  --main-bg: #f5f5f5;
+  --color-primary: #f63;
+  --border-color-primary: #666666;
+  --hover-color: #ff7e53;
+  --text-color: ##2c3e50;
 }
 #app {
-  font-family:  Avenir, Helvetica, Arial, sans-serif;
+  font-family: Avenir, Helvetica, Arial, sans-serif;
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: var(--text-color);
   font-size: 18px;
 }
-::placeholder{
-  font-family: 'Open Sans', sans-serif;
+
+::placeholder {
+  font-family: "Open Sans", sans-serif;
 }
 
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
-button{
+button {
   background-color: var(--color-primary);
   outline: none;
   border: none;
@@ -48,7 +52,7 @@ button{
   border-radius: 4px;
   font-weight: 600;
 }
-button:hover{
+button:hover {
   background-color: var(--hover-color);
 }
 </style>

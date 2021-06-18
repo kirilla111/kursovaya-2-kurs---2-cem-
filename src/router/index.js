@@ -1,6 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import admin from '../views/Admin.vue'
+import Food from '../views/Food'
 
 const routes = [
   {
@@ -23,11 +24,11 @@ const routes = [
     name: 'admin',
     component: admin
   },
-  // {
-  //   path: '/page',
-  //   name: 'page',
-  //   component: Page
-  // }
+  {
+    path: '/food',
+    name: 'Food',
+    component: Food
+  }
 ]
 
 const router = createRouter({
