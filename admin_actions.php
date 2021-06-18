@@ -17,7 +17,7 @@
         }
         
         if ($action == 'read'){
-            $sql = $conn->query("SELECT f1.id,food_name,f1.description,price,bi.title brand,f2.title category,image_url as image,false as updated FROM $table_name f1
+            $sql = $conn->query("SELECT f1.id,food_name,f1.description,price,bi.title brand,f2.title category,f1.image_url as image,false as updated FROM $table_name f1
                                     JOIN food_category f2 on f1.category_id = f2.id
                                         join brands_info bi on bi.id = f1.brand_id ");
             $data = array();

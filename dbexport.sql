@@ -132,7 +132,7 @@ CREATE TABLE `food_info` (
   KEY `food_info_FK_1` (`brand_id`),
   CONSTRAINT `food_info_FK` FOREIGN KEY (`category_id`) REFERENCES `food_category` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `food_info_FK_1` FOREIGN KEY (`brand_id`) REFERENCES `brands_info` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -141,7 +141,7 @@ CREATE TABLE `food_info` (
 
 LOCK TABLES `food_info` WRITE;
 /*!40000 ALTER TABLE `food_info` DISABLE KEYS */;
-INSERT INTO `food_info` VALUES (2,'Set #1',19.99,'NO INFO',1,'https://i1.wp.com/4ao3uo2687rn3u1b6w2vblpy-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/15735694_web1_190125-WLT-FoodGuide.jpg',1),(4,'Set #2',11.99,'NO INFO',5,'https://i1.wp.com/4ao3uo2687rn3u1b6w2vblpy-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/15735694_web1_190125-WLT-FoodGuide.jpg',2),(5,'Set #3',33.98,'NO INFO',1,'https://i1.wp.com/4ao3uo2687rn3u1b6w2vblpy-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/15735694_web1_190125-WLT-FoodGuide.jpg',1),(6,'Tom-Yum',11.99,'NO INFO',1,'https://i1.wp.com/4ao3uo2687rn3u1b6w2vblpy-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/15735694_web1_190125-WLT-FoodGuide.jpg',2);
+INSERT INTO `food_info` VALUES (2,'Set #1',19.99,'NO INFO',1,'https://i1.wp.com/4ao3uo2687rn3u1b6w2vblpy-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/15735694_web1_190125-WLT-FoodGuide.jpg',1),(4,'Set #2',11.99,'NO INFO',5,'https://i1.wp.com/4ao3uo2687rn3u1b6w2vblpy-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/15735694_web1_190125-WLT-FoodGuide.jpg',2),(5,'Set #3',33.98,'NO INFO',1,'https://i1.wp.com/4ao3uo2687rn3u1b6w2vblpy-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/15735694_web1_190125-WLT-FoodGuide.jpg',1),(6,'Tom-Yum',11.99,'NO INFO',1,'https://i1.wp.com/4ao3uo2687rn3u1b6w2vblpy-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/15735694_web1_190125-WLT-FoodGuide.jpg',2),(7,'Chicken Burger',3.39,'New fresh burger with chicken',2,'https://zhit-vkusno.ru/wp-content/uploads/2020/10/1179745_1584964840.2804_original.jpg',2);
 /*!40000 ALTER TABLE `food_info` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -226,4 +226,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-06-18 23:16:10
+-- Dump completed on 2021-06-19  1:04:17
