@@ -2,12 +2,14 @@
 <div>
  <m-category v-on:update="ChangeCategory" />
   <div class="main__container">
+    <div class="container__flex">
+      <input type="text" class="search" placeholder="🔎 Search.." v-model="filter" >
+    </div>
+    <h1>{{ category }}</h1>
     <div v-if="switched">
-       <h1>Category: {{ category }}</h1>
-     
       <div class="cantainer__grid">
         <m-food
-          v-for="(food, index) in food_info"
+          v-for="(food, index) in filtered_food_info"
           :key="index"
           :id="food.id"
           :image_url="food.image_url"
@@ -19,11 +21,10 @@
         />
       </div>
     </div>
-    <div v-else class="main__container">
-       <h1>Here's What We deliver</h1>
+    <div v-else>
       <div class="cantainer__grid">
         <m-food
-          v-for="(food, index) in food_info"
+          v-for="(food, index) in filtered_food_info"
           :key="index"
           :id="food.id"
           :image_url="food.image_url"
@@ -33,18 +34,6 @@
           :rating="food.rating"
           :description="food.description"
         />
-        <!-- <div v-for="(food, index) in food_info" :key="index" class="grid__food">
-          <img :src="food.image_url" width="250" />
-          <div class="food_text">
-            <div class="text__main-info">
-              <div class="text__title">{{ food.food_name }}</div>
-              <div class="text__price">{{ food.price }} $</div>
-            </div>
-              <div class="text__brand">{{ food.brand }} &nbsp;&nbsp;&nbsp; {{food.rating}}&nbsp;&#9733;</div>
-            <div class="text__description">{{ food.description }}</div>
-          </div>
-          <button class="grid__cart-button" @click="ToCard(food)">To Cart</button> -->
-        <!-- </div> -->
       </div>
     </div>
   </div>
@@ -61,10 +50,22 @@ export default {
   components: { mFood,mCategory },
   data() {
     return {
-      category: "",
+      category: "Here's What We deliver",
       food_info: [],
       switched: false,
+      filter: ''
     };
+  },
+   computed: {
+    filtered_food_info: function () {
+      var keyword = this.filter.toLowerCase();
+      return this.food_info.filter(
+        (x) =>
+            x.food_name.toLowerCase().includes(keyword) ||
+            x.brand.toLowerCase().includes(keyword) ||
+            x.description.toLowerCase().includes(keyword)
+      );
+    },
   },
   methods: {
     getFoodData() {
@@ -81,7 +82,7 @@ export default {
     },
     ChangeCategory: function (categoryInfo) {
       //console.log(categoryInfo);
-      this.category = `${categoryInfo.title}`;
+      this.category = `Category: ${categoryInfo.title}`;
       this.switched = true;
       let vm = this;
       axios
@@ -111,9 +112,24 @@ export default {
   font-size: 22px;
   font-weight: bold;
 }
-
-.grid__cart-button {
-  margin-top: 15px;
-  margin-left: 140px;
+h1{
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+.container__flex{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.search{
+  padding: 8px 40px;
+  margin-top: 25px;
+  border-radius: 5px;
+  border: 1px solid var(--hover-color);
+  font-weight: 400;
+  outline: none;
+  font-size: 20px;
+  width: 40%;
+  display: inline;
 }
 </style>

@@ -116,7 +116,7 @@
 
         <div class="form__item row">
           <router-link to="/"
-            ><button class="item__button">Return</button></router-link
+            ><button class="item__button">Back</button></router-link
           >
           <button type="submit" @click="TrySignUp" class="item__button">
             Enter
@@ -302,6 +302,7 @@ export default {
           if (response.data.session) {
             vm.isAutorized = response.data.session;
             vm.getTableData();
+            console.log(response);
             vm.showModal(true,'Welcome!');
           } else {
             vm.showModal(false,'Error!');
@@ -316,6 +317,7 @@ export default {
           "http://localhost/afanasyev-project-php/admin_actions.php?action=read"
         )
         .then(function (response) {
+          console.log(response);
           if (response.data.error) {
             this.errorMsg = response.data.message;
           } else {
@@ -377,6 +379,7 @@ h1 {
   flex-direction: column;
   gap: 20px;
   justify-content: space-between;
+  margin-bottom: 120px;
 }
 .container__options {
   margin-top: 30px;
@@ -496,5 +499,12 @@ h1 {
 }
 .gray .row__cell:hover {
   background-color: var(--color-primary);
+}
+button{
+  padding: 15px;
+  width: 80px;
+}
+.main__container{
+  border-top: 0px;
 }
 </style>

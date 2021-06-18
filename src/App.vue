@@ -49,8 +49,9 @@ button {
   border: none;
   color: var(--main-bg);
   padding: 10px 15px;
-  border-radius: 4px;
+  border-radius: 20px;
   font-weight: 600;
+  font-size: 16px;
 }
 button:hover {
   background-color: var(--hover-color);
