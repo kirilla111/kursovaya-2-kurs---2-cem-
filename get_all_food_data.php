@@ -1,20 +1,15 @@
 <?php
     $conn = include 'get_conn.php';
+
+    $sql = $conn->query("select fi.*,bi.title as brand,bi.rating from food_info fi 
+	join brands_info bi on bi.id = fi.brand_id  ");
     
     $data = array();
     
-    $category_id;
-
-    if (isset($_GET['category'])){
-        $category_id = $_GET['category'];
-    }
-    
-    $sql = $conn->query("SELECT fi.*, bi.title as brand FROM food_info fi 
-                            join brands_info bi on bi.id = fi.brand_id
-                                where category_id = $category_id  ");
-
     while ($row = $sql->fetch_assoc()){
+    
         array_push($data,$row);
+    
     }
     $result['food_info'] = $data;
     echo json_encode($result);
