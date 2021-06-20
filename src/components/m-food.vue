@@ -40,10 +40,10 @@ export default {
         description: this.description,
         count: 1
       };
-      console.log(params);
+      //console.log(params);
       this.$store.dispatch("pushCart", params);
-      console.log(this.id);
-      console.log(this.$store.getters.cart);
+      //console.log(this.id);
+      //console.log(this.$store.getters.cart);
     },
     showModal(type, message) {
       var modal = document.getElementById("modal_window__cart");

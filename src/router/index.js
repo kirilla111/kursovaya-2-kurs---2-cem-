@@ -3,6 +3,7 @@ import Home from '../views/Home.vue'
 import admin from '../views/Admin.vue'
 import Food from '../views/Food'
 import Cart from '../views/Cart'
+import Check from '../views/Check'
 
 const routes = [
   {
@@ -34,6 +35,11 @@ const routes = [
     path: '/cart',
     name: 'Cart',
     component: Cart
+  },
+  {
+    path: '/check',
+    name: 'Check',
+    component: Check
   }
 ]
 

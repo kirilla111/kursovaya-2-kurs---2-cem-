@@ -91,7 +91,7 @@
       <p class="container__options">
         If you are not the administrator of our site, please leave this page
       </p>
-      <form class="container__form">
+      <form v-on:submit.prevent="onSubmit" class="container__form">
         <div class="form__item">
           <label class="item__label"> Login: </label>
           <input

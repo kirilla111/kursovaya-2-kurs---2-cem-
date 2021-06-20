@@ -11,11 +11,17 @@ export default createStore({
     },
     sign(state){
       state.signed = !state.signed;
+    },
+    saveCart(state,vals){
+      state.cart_info = vals;
     }
   },
   actions: {
     pushCart(context, item){
       context.commit('push',item)
+    },
+    saveCart(context, vals){
+      context.commit('saveCart',vals)
     }
   },
   modules: {
