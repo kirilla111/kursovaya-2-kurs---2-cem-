@@ -37,7 +37,12 @@
       <form v-on:submit.prevent="onSubmit" class="check__form">
         <div class="form__item">
           <label>We deliver anywhere !</label>
-          <input type="text" placeholder="Address to deliver" required />
+          <input
+            type="text"
+            placeholder="Address to deliver"
+            v-model="address"
+            required
+          />
         </div>
         <div class="form__item">
           <label>Time of deliver</label>
@@ -49,7 +54,15 @@
           />
         </div>
         <div v-if="!isSignUp" class="form__item">
-          <input type="text" placeholder="Telepthone Number" required />
+          <input
+            id="tn_input"
+            type="number"
+            placeholder="Telepthone Number"
+            v-model="tel_num"
+            min="1000000"
+            max="10000000000"
+            required
+          />
           <!-- <button>Confirm Address</button> -->
         </div>
         <div class="form__item confirmation">
@@ -63,22 +76,25 @@
       </form>
     </div>
   </div>
-  <div v-if="!isSignUp" class="flex-container__item">
+  <div v-if="isSignUp" class="flex-container__item">
     <!-- todo ------------------ -->
-    <h2>Your personal discount: {{ 12 }}%</h2>
+    <h2>Your personal discount: {{ discount }}%</h2>
     <h2 class="food-info__total">
-      Total amount with personal discount: {{ getTotalSumm() }}$
+      Total amount with personal discount: {{ getSummWithDiscount() }}$
     </h2>
   </div>
 </template>
 
 <script>
+import axios from "axios";
 export default {
   data() {
     return {
       search: "",
+      tel_num: "",
+      address: "",
       cart: [
-        // {
+        {
         //   brand: "MacDonalds",
         //   description:
         //     "qwewqeytwqyteuwuqyt asghdghasjhjdgas iot uoireoti erh j hgfdkj hasd agvsj uhrfguie rhfgu",
@@ -125,14 +141,18 @@ export default {
         //   price: "11.99",
         //   rating: "0",
         //   count: 1,
-        // },
+        },
       ],
       isSignUp: false,
+      discount: 0.0
     };
   },
   methods: {
     initCartInfo() {
       this.isSignUp = this.$store.getters.sign;
+      if (this.isSignUp){
+        this.getUserDiscount();
+      }
       this.cart = this.$store.getters.cart;
     },
     parseDate(date) {
@@ -165,23 +185,67 @@ export default {
       return total;
     },
     startTimer() {
-      var bu = document.getElementById("BuTimer");
-      var date = new Date();
-      date.setHours(date.getHours() + 1);
-      var endDate = date;
-      let timerId = setTimeout(function tick() {
-        var mills = endDate - new Date();
-        if (mills > 1000) {
-          var mins = Math.floor(mills / (1000 * 60));
-          var seconds = Math.floor((mills - mins * (1000 * 60)) / 1000);
-          bu.innerHTML = `Time left ${mins}:${seconds}`;
-          timerId = setTimeout(tick, 1000); // (*)
+      console.log('click');
+      if (((this.tel_num != ""  && this.tel_num.length>6) || this.isSignUp) && this.address != "")
+        if (this.cart.length > 0) {
+          
+
+          // УБРААААТЬ!!!
+          document.getElementById("BuTimer").disabled = true;
+
+          //params.push({"isSignUp": this.isSignUp});
+          var items = [];
+          this.cart.forEach(element => {
+            items.push({"id": element.id, "count": element.count});
+          });
+          //params.push({"items": items});
+          var params = {"items": items, "info": this.isSignUp};
+          axios
+          .get(
+            `http://localhost/afanasyev-project-php/insert_data.php`,{params}
+          )
+          .then(function (response) {
+            console.log(response);
+          });
+      
+          this.$store.commit("clear");
+
+          var bu = document.getElementById("BuTimer");
+          var date = new Date();
+          date.setHours(date.getHours() + 1);
+          var endDate = date;
+          let timerId = setTimeout(function tick() {
+            var mills = endDate - new Date();
+            if (mills > 1000) {
+              var mins = Math.floor(mills / (1000 * 60));
+              var seconds = Math.floor((mills - mins * (1000 * 60)) / 1000);
+              bu.innerHTML = `Time left ${mins}:${seconds}`;
+              timerId = setTimeout(tick, 1000); // (*)
+            } else {
+              bu.innerHTML = "Food Delivered!";
+              return;
+            }
+          }, 1000);
         } else {
-          bu.innerHTML = "Food Delivered!";
-          return;
+          alert("Cart is empty!");
         }
-      }, 1000);
     },
+    getUserDiscount(){
+      let vm = this;
+      axios
+        .get(
+          `http://localhost/afanasyev-project-php/get_user_discount.php`
+        )
+        .then(function (response) {
+          console.log(response.data);
+          vm.discount = response.data.discount;
+        });
+    },
+    getSummWithDiscount(){
+      var discount = parseFloat(this.discount);
+      var summ = this.getTotalSumm();
+      return summ*((100-discount)/100);
+    }
   },
   mounted() {
     this.initCartInfo();

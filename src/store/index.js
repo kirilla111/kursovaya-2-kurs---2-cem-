@@ -14,6 +14,9 @@ export default createStore({
     },
     saveCart(state,vals){
       state.cart_info = vals;
+    },
+    clear(state){
+      state.cart_info = [];
     }
   },
   actions: {

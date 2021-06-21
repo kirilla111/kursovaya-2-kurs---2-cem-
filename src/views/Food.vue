@@ -1,44 +1,48 @@
 <template>
-<div>
- <m-category v-on:update="ChangeCategory" />
-  <div class="main__container">
-    <div class="container__flex">
-      <input type="text" class="search" placeholder="🔎 Search.." v-model="filter" >
-    </div>
-    <h1>{{ category }}</h1>
-    <div v-if="switched">
-      <div class="cantainer__grid">
-        <m-food
-          v-for="(food, index) in filtered_food_info"
-          :key="index"
-          :id="food.id"
-          :image_url="food.image_url"
-          :food_name="food.food_name"
-          :brand="food.brand"
-          :price="food.price"
-          :rating="food.rating"
-          :description="food.description"
+  <div>
+    <m-category v-on:update="ChangeCategory" />
+    <div class="main__container">
+      <div class="container__flex">
+        <input
+          type="text"
+          class="search"
+          placeholder="🔎 Search.."
+          v-model="filter"
         />
       </div>
-    </div>
-    <div v-else>
-      <div class="cantainer__grid">
-        <m-food
-          v-for="(food, index) in filtered_food_info"
-          :key="index"
-          :id="food.id"
-          :image_url="food.image_url"
-          :food_name="food.food_name"
-          :brand="food.brand"
-          :price="food.price"
-          :rating="food.rating"
-          :description="food.description"
-        />
+      <h1>{{ category }}</h1>
+      <div v-if="switched">
+        <div class="cantainer__grid">
+          <m-food
+            v-for="(food, index) in filtered_food_info"
+            :key="index"
+            :id="food.id"
+            :image_url="food.image_url"
+            :food_name="food.food_name"
+            :brand="food.brand"
+            :price="food.price"
+            :rating="food.rating"
+            :description="food.description"
+          />
+        </div>
+      </div>
+      <div v-else>
+        <div class="cantainer__grid">
+          <m-food
+            v-for="(food, index) in filtered_food_info"
+            :key="index"
+            :id="food.id"
+            :image_url="food.image_url"
+            :food_name="food.food_name"
+            :brand="food.brand"
+            :price="food.price"
+            :rating="food.rating"
+            :description="food.description"
+          />
+        </div>
       </div>
     </div>
   </div>
-</div>
- 
 </template>
 
 <script>
@@ -47,23 +51,23 @@ import axios from "axios";
 import mCategory from "../components/m-category.vue";
 
 export default {
-  components: { mFood,mCategory },
+  components: { mFood, mCategory },
   data() {
     return {
       category: "Here's What We deliver",
       food_info: [],
       switched: false,
-      filter: ''
+      filter: "",
     };
   },
-   computed: {
+  computed: {
     filtered_food_info: function () {
       var keyword = this.filter.toLowerCase();
       return this.food_info.filter(
         (x) =>
-            x.food_name.toLowerCase().includes(keyword) ||
-            x.brand.toLowerCase().includes(keyword) ||
-            x.description.toLowerCase().includes(keyword)
+          x.food_name.toLowerCase().includes(keyword) ||
+          x.brand.toLowerCase().includes(keyword) ||
+          x.description.toLowerCase().includes(keyword)
       );
     },
   },
@@ -112,16 +116,16 @@ export default {
   font-size: 22px;
   font-weight: bold;
 }
-h1{
+h1 {
   margin-bottom: 20px;
   margin-top: 20px;
 }
-.container__flex{
+.container__flex {
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.search{
+.search {
   padding: 8px 40px;
   margin-top: 25px;
   border-radius: 5px;

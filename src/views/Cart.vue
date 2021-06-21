@@ -25,8 +25,8 @@
       </div>
     </div>
     <router-link class="link" id="Basket" to="/check">
-      <button @click="Save" id="goToCheck">
-        Continue without authorization
+      <button @click="Save" id="goToCheckBu">
+       {{buText}}
       </button></router-link
     >
     <router-view />
@@ -88,15 +88,16 @@ export default {
         // },
       ],
       sign: false,
+      buText:"Continue without authorization"
     };
   },
   methods: {
     getCartInfo() {
-      console.log("-------->");
+      //console.log("-------->");
       this.cart = this.$store.getters.cart;
 
       if (this.$store.getters.sign) {
-        document.getElementById("goToCheck").innerHTML = "Continue";
+        this.buText = "Continue";
       }
     },
     inc(count, index) {
@@ -147,6 +148,9 @@ h3 {
 }
 .row__actions {
   display: block;
+}
+#goToCheckBu{
+  margin-bottom: 150px;
 }
 .action__button {
   font-size: 20px;

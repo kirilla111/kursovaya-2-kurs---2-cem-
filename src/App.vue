@@ -9,6 +9,7 @@
 <script>
 import mFooter from "./components/m-footer.vue";
 import mHeader from "./components/m-header.vue";
+//import router from "../router/index";
 
 export default {
   name: "app",
@@ -27,7 +28,7 @@ body {
   --color-primary: #f63;
   --border-color-primary: #666666;
   --hover-color: #ff7e53;
-  --text-color: ##2c3e50;
+  --text-color: #2c3e50;
 }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -49,7 +50,7 @@ button {
   border: none;
   color: var(--main-bg);
   padding: 10px 15px;
-  border-radius: 20px;
+  border-radius: 2px;
   font-weight: 600;
   font-size: 16px;
 }

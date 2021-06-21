@@ -47,9 +47,8 @@ export default {
     },
     showModal(type, message) {
       var modal = document.getElementById("modal_window__cart");
-
       modal.innerHTML = message;
-
+      modal.style.display = 'block';
       if (type) {
         modal.style.backgroundColor = "#00cc99";
       } else {
@@ -58,7 +57,8 @@ export default {
       modal.classList.add("show");
       setTimeout(function () {
         modal.classList.remove("show");
-      }, 3000);
+         modal.style.display = 'none';
+      }, 2000);
     },
   },
 };
@@ -66,7 +66,7 @@ export default {
 
 <style>
 #modal_window__cart {
-  display: block;
+  display: none;
   position: fixed;
   text-align: center;
   top: 20px;

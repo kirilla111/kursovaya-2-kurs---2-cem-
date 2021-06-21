@@ -1,6 +1,8 @@
 <template>
   <div id="nav">
-    <img src="../assets/logo.jpg" alt="logo" id="logo" width="100" />
+    <router-link to="/"
+      ><img src="../assets/logo.jpg" alt="logo" id="logo" width="100"
+    /></router-link>
     <div class="nav__text-links">
       <router-link class="link" to="/"><a>Partners</a></router-link>
       <p class="devider" style="font-size: 30px">|</p>
@@ -10,16 +12,26 @@
     </div>
     <div class="nav__buttons">
       <!-- <router-link id="login" to="/about"><button>Login</button></router-link> -->
-      <router-link id="signUp" to="/about"
-        ><button>Sign Up</button></router-link
-      >
+     <button @click="Exit()" id="signUpBu">Sign In</button>
     </div>
   </div>
   <router-view />
 </template>
 
 <script>
-export default {};
+import router from "../router/index";
+
+export default {
+  methods: {
+    Exit() {
+      router.replace("about");
+      if (this.$store.getters.sign) {
+        this.$store.commit("sign");
+        document.getElementById("signUpBu").innerHTML = "Sign In";
+      }
+    },
+  },
+};
 </script>
 
 <style>
@@ -51,6 +63,9 @@ a {
   color: var(--text-color);
   text-decoration: none;
 }
+#nav a:hover {
+  color: var(--hover-color);
+}
 .nav__text-links {
   grid-area: h2;
   display: flex;
@@ -61,6 +76,9 @@ a {
   justify-content: center;
   gap: 10px;
   grid-area: r1;
+}
+.nav__buttons button{
+  min-width: 90px;
 }
 #logo {
   grid-area: h1;
