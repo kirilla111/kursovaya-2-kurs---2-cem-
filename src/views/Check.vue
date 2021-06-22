@@ -4,7 +4,9 @@
       <img
         src="http://cdn.onlinewebfonts.com/svg/download_572259.png"
         width="50"
+        id="printBu"
         alt="print page"
+        @click="printPage()"
       />
     </div>
     <h1>Confirmation:</h1>
@@ -53,6 +55,7 @@
             :value="parseDate(new Date())"
           />
         </div>
+        <div class="show-on-print">Your Telepthone number:</div>
         <div v-if="!isSignUp" class="form__item">
           <input
             id="tn_input"
@@ -76,8 +79,7 @@
       </form>
     </div>
   </div>
-  <div v-if="isSignUp" class="flex-container__item">
-    <!-- todo ------------------ -->
+  <div v-if="isSignUp" class="flex-container__item" id="print-text-h2">
     <h2>Your personal discount: {{ discount }}%</h2>
     <h2 class="food-info__total">
       Total amount with personal discount: {{ getSummWithDiscount() }}$
@@ -177,6 +179,9 @@ export default {
       date = yyyy + "-" + mm + "-" + dd + "T" + hour + ":" + minutes;
       return date;
     },
+    printPage() {
+      javascript: (print());
+    },
     getTotalSumm: function () {
       var total = 0;
       this.cart.forEach((element) => {
@@ -185,7 +190,7 @@ export default {
       return total;
     },
     startTimer() {
-      console.log('click');
+      //console.log('click');
       if (((this.tel_num != ""  && this.tel_num.length>6) || this.isSignUp) && this.address != "")
         if (this.cart.length > 0) {
           
@@ -205,7 +210,7 @@ export default {
             `http://localhost/afanasyev-project-php/insert_data.php`,{params}
           )
           .then(function (response) {
-            console.log(response);
+            //console.log(response);
           });
       
           this.$store.commit("clear");
@@ -237,7 +242,7 @@ export default {
           `http://localhost/afanasyev-project-php/get_user_discount.php`
         )
         .then(function (response) {
-          console.log(response.data);
+          //console.log(response.data);
           vm.discount = response.data.discount;
         });
     },
@@ -275,6 +280,9 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+.show-on-print{
+  display:none;
 }
 .form__item {
   display: flex;
@@ -324,6 +332,61 @@ export default {
     margin-left: 0px;
     margin-top: 10px;
     cursor: pointer;
+  }
+}
+@media print {
+  #printBu{
+    display:none;
+  }
+  h1{
+    font-size:2.5em;
+  }
+  h2{
+    font-size:1.8em;
+  }
+  .flex-container__check{
+    font-size:1em;
+  }
+  #mFooter{
+    display:none;
+  }
+  #nav-links,#nav-buttons{
+    display:none;
+  }
+  body{
+        background-color: white;
+        page-break-inside: avoid;
+        orphans: 5;
+        widows: 2;
+        text-align:center;
+  }
+  .break-page{
+    page-break-after: always;
+  }
+  @page{
+      margin-top: 2cm;
+      margin-bottom: 2cm;
+      margin-left: 1cm;
+      margin-right: 1cm;
+  }
+  .flex-container__check {
+    flex-direction: column;
+    gap: 50px;
+  }
+  input{
+    border:0px;
+    width:100%;
+    text-align:center;
+    padding:20px;
+  }
+ .show-on-print{
+    display:block;
+  }
+  #BuTimer{
+    display: none;
+  }
+  #print-text-h2 h2{
+    font-size: 1.6em;
   }
 }
 </style>

@@ -20,19 +20,19 @@
             width="40"
             alt="VK"
         /></a>
-        <a href="https://vk.com/kirillafanasyev2014"
+        <a href="https://twitter.com/"
           ><img
             src="https://www.vippng.com/png/detail/28-283916_png-file-download-icon-twitter-png.png"
             width="40"
             alt="Twitter"
         /></a>
-        <a href="https://vk.com/kirillafanasyev2014"
+        <a href="https://www.instagram.com/"
           ><img
             src="https://im0-tub-ru.yandex.net/i?id=51efd974e716fc5b9677e74bf02dedce&n=13"
             width="40"
             alt="Instagram"
         /></a>
-        <a href="https://vk.com/kirillafanasyev2014"
+        <a href="https://ru-ru.facebook.com/"
           ><img
             src="https://www.rjselectronics.com/wp-content/uploads/facebook-1-768x768.png"
             width="40"

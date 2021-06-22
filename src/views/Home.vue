@@ -49,7 +49,7 @@ export default {
         });
     },
     ToCard(card) {
-      console.log(card);
+      //console.log(card);
     },
   },
   created() {

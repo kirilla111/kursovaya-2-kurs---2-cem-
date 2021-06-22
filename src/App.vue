@@ -1,9 +1,9 @@
 <template>
-  <m-header/>
+  <m-header />
 
  
 
-  <m-footer />
+  <m-footer id="mFooter" />
 </template>
 
 <script>

@@ -95,13 +95,13 @@ export default {
         )
         .then(function (response) {
           //console.log(response);
-          console.log(response.data);
+          //console.log(response.data);
           //console.log(vm.isAutorized);
           vm.food_info = response.data.food_info;
         });
     },
     ToCard(card) {
-      console.log(card);
+      //console.log(card);
     },
   },
   created() {

@@ -180,7 +180,7 @@ export default {
       // });
     },
     editRow(index) {
-      console.log(index);
+      //console.log(index);
 
       var id = document.getElementById(`${0}${index}`).value;
       var food_name = document.getElementById(`${1}${index}`).value;
@@ -192,7 +192,7 @@ export default {
 
       var item;
 
-      console.log(id);
+      //console.log(id);
       var i = 0;
       this.food_info.forEach((element) => {
         if (element.id === id) {
@@ -202,7 +202,7 @@ export default {
         i++;
       });
 
-      console.log(item);
+      //console.log(item);
       // var filtered_food = this.filtered_food_info;
 
       if (item.updated === "0") item.updated = "1";
@@ -224,7 +224,7 @@ export default {
     saveChanges() {
       var response = confirm("Are You sure?");
       var params = { table: this.food_info };
-      console.log({ params });
+      //console.log({ params });
       let vm = this;
       if (response) {
         axios
@@ -234,7 +234,7 @@ export default {
           )
           .then(function (response) {
             //console.log(response);
-            console.log(response.data);
+            //console.log(response.data);
             var e = response.data.errors;
             var u = response.data.updates;
             //console.log(vm.isAutorized);
@@ -302,7 +302,7 @@ export default {
           if (response.data.session) {
             vm.isAutorized = response.data.session;
             vm.getTableData();
-            console.log(response);
+            //console.log(response);
             vm.showModal(true,'Welcome!');
           } else {
             vm.showModal(false,'Error!');
@@ -317,7 +317,7 @@ export default {
           "http://localhost/afanasyev-project-php/admin_actions.php?action=read"
         )
         .then(function (response) {
-          console.log(response);
+          //console.log(response);
           if (response.data.error) {
             this.errorMsg = response.data.message;
           } else {

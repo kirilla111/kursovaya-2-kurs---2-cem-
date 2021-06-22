@@ -3,14 +3,14 @@
     <router-link to="/"
       ><img src="../assets/logo.jpg" alt="logo" id="logo" width="100"
     /></router-link>
-    <div class="nav__text-links">
+    <div id="nav-links" class="nav__text-links">
       <router-link class="link" to="/"><a>Partners</a></router-link>
       <p class="devider" style="font-size: 30px">|</p>
       <router-link class="link" to="/food"><a>Food</a></router-link>
       <p class="devider" style="font-size: 30px">|</p>
       <router-link class="link" id="Basket" to="/cart"><a>Cart</a></router-link>
     </div>
-    <div class="nav__buttons">
+    <div id="nav-buttons" class="nav__buttons">
       <!-- <router-link id="login" to="/about"><button>Login</button></router-link> -->
      <button @click="Exit()" id="signUpBu">Sign In</button>
     </div>
@@ -34,7 +34,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 a {
   display: inline;
   padding: 0;
