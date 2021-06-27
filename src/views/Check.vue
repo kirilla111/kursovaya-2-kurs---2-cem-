@@ -55,12 +55,12 @@
             :value="parseDate(new Date())"
           />
         </div>
-        <div class="show-on-print">Your Telepthone number:</div>
+        <div class="show-on-print">Your Telethone number:</div>
         <div v-if="!isSignUp" class="form__item">
           <input
             id="tn_input"
             type="number"
-            placeholder="Telepthone Number"
+            placeholder="Telethone Number"
             v-model="tel_num"
             min="1000000"
             max="10000000000"
@@ -311,7 +311,7 @@ export default {
   flex-direction: row;
 }
 .flex-container__item {
-  margin-bottom: 50px;
+  margin-bottom: 150px;
 }
 .flex-container__print {
   position: absolute;

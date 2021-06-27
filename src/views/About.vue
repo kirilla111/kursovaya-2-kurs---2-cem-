@@ -7,7 +7,7 @@
         <input
           id="tn_input_signUp"
           type="number"
-          placeholder="Telepthone Number"
+          placeholder="Telethone Number"
           v-model="tel_num"
           min="1000000"
           required
@@ -30,7 +30,7 @@
           id="tn1"
           min="1000000"
           type="number"
-          placeholder="Telepthone Number"
+          placeholder="Telethone Number"
           required
         />
         <input
