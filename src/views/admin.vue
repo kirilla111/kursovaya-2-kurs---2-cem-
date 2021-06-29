@@ -460,7 +460,7 @@ h1 {
 }
 .modal {
   display: block;
-  position: absolute;
+  position: fixed;
   text-align: center;
   top: 20px;
   right: 20px;

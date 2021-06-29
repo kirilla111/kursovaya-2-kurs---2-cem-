@@ -266,6 +266,7 @@ export default {
   margin-right: 10%;
   justify-content: center;
   gap: 10%;
+  margin-bottom: 150px;
 }
 .item__row {
   display: flex;
