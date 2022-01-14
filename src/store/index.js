@@ -3,7 +3,10 @@ import { createStore } from 'vuex'
 export default createStore({
   state: {
     cart_info: [],
-    signed: false
+    signed: false,
+    userLogin: "",
+    courierSigned: false,
+    courierLogin: "",
   },
   mutations: {
     push(state, item){
@@ -11,6 +14,13 @@ export default createStore({
     },
     sign(state){
       state.signed = !state.signed;
+    },
+    userSignLogin(state, login){
+      state.userLogin = login;
+    },
+    courierSign(state, login){
+      state.courierSigned = true;
+      state.courierLogin = login;
     },
     saveCart(state,vals){
       state.cart_info = vals;
@@ -33,11 +43,20 @@ export default createStore({
     id: state => {
       return state.id;
     },
+    userLogin: state => {
+      return state.userLogin;
+    },
     cart: state =>{
       return state.cart_info;
     },
     sign: state =>{
       return state.signed;
+    },
+    courierSign: state =>{
+      return state.courierSigned;
+    },
+    courierLogin: state =>{
+      return state.courierLogin;
     }
   }
 })

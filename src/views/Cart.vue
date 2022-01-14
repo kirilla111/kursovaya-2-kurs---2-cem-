@@ -1,4 +1,5 @@
 <template>
+  <main>
   <div v-if="cart.length===0" class="empty-block">
     <h1> Your Cart is empty</h1>
   </div>
@@ -31,6 +32,7 @@
     >
     <router-view />
   </div>
+  </main>
 </template>
 
 <script>
@@ -171,9 +173,7 @@ h3 {
   width: 30%;
   margin-bottom: 30px;
 }
-.empty-block{
-  margin-bottom: 800px;
-}
+
 @media (max-width: 660px) {
   .cart-container__row {
     flex-direction: column;

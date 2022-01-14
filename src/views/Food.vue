@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <main>
     <m-category v-on:update="ChangeCategory" />
     <div class="main__container">
       <div class="container__flex">
@@ -42,7 +42,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </main>
 </template>
 
 <script>

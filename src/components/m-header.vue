@@ -12,7 +12,8 @@
     </div>
     <div id="nav-buttons" class="nav__buttons">
       <!-- <router-link id="login" to="/about"><button>Login</button></router-link> -->
-     <button @click="Exit()" id="signUpBu">Sign In</button>
+      <button @click="Exit()" id="signUpBu">Sign In</button>
+      <button @click="ExitСouriers()" id="signUpBuCourier">For Сouriers</button>
     </div>
   </div>
   <router-view />
@@ -28,6 +29,13 @@ export default {
       if (this.$store.getters.sign) {
         this.$store.commit("sign");
         document.getElementById("signUpBu").innerHTML = "Sign In";
+      }
+    },
+    ExitСouriers() {
+      router.replace("aboutCouriers");
+      if (this.$store.getters.sign) {
+        this.$store.commit("signСouriers");
+        //document.getElementById("signUpBuCourier").innerHTML = "Sign In";
       }
     },
   },
@@ -77,7 +85,7 @@ a {
   gap: 10px;
   grid-area: r1;
 }
-.nav__buttons button{
+.nav__buttons button {
   min-width: 90px;
 }
 #logo {

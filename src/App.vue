@@ -1,9 +1,9 @@
 <template>
-  <m-header />
+  <div class="wrapper">
+    <m-header />
 
- 
-
-  <m-footer id="mFooter" />
+    <m-footer id="mFooter" />
+  </div>
 </template>
 
 <script>
@@ -14,14 +14,22 @@ import mHeader from "./components/m-header.vue";
 export default {
   name: "app",
   components: { mFooter, mHeader },
-  
 };
 </script>
 
 <style>
+main {
+  flex: 1 1 auto !important;
+}
 body {
   padding: 0;
   margin: 0;
+  height: 100%;
+}
+.wrapper{
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 :root {
   --main-bg: #f5f5f5;
@@ -30,6 +38,7 @@ body {
   --hover-color: #ff7e53;
   --text-color: #2c3e50;
 }
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   font-weight: 400;
@@ -38,12 +47,15 @@ body {
   text-align: center;
   color: var(--text-color);
   font-size: 18px;
+  height: 100%;
 }
 
 ::placeholder {
   font-family: "Open Sans", sans-serif;
 }
-
+html{
+  height: 100%;
+}
 button {
   background-color: var(--color-primary);
   outline: none;

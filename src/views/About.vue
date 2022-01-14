@@ -1,57 +1,62 @@
 <template>
-  <div id="modal_window__signUp"></div>
-  <div class="check">
-    <div>
-      <h1>Sign Up</h1>
-      <form v-on:submit.prevent="onSubmit" class="check__form" action="">
-        <input
-          id="tn_input_signUp"
-          type="number"
-          placeholder="Telethone Number"
-          v-model="tel_num"
-          min="1000000"
-          required
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          v-model="pass"
-          minlength="6"
-          id="password_signUp"
-          required
-        />
-        <button @click="SignUp()" type="submit">Submit</button>
-      </form>
+  <main>
+    <div id="modal_window__signUp"></div>
+    <div class="check">
+      <div>
+        <h1>Sign Up</h1>
+        <form v-on:submit.prevent="onSubmit" class="check__form" action="">
+          <input
+            id="tn_input_signUp"
+            type="number"
+            placeholder="Telethone Number"
+            v-model="tel_num"
+            min="1000000"
+            required
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            v-model="pass"
+            minlength="6"
+            id="password_signUp"
+            required
+          />
+          <button @click="SignUp()" type="submit">Submit</button>
+        </form>
+      </div>
+      <div>
+        <h1>First time? - Register</h1>
+        <form v-on:submit.prevent="onSubmit" class="check__form" action="">
+          <input
+            id="tn1"
+            min="1000000"
+            type="number"
+            placeholder="Telethone Number"
+            required
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            minlength="6"
+            id="pc1"
+            required
+          />
+          <input
+            type="password"
+            minlength="6"
+            placeholder="Confirm Password"
+            id="pc2"
+            required
+          />
+          <button type="submit" @click="Register()">Submit</button>
+        </form>
+      </div>
     </div>
-    <div>
-      <h1>First time? - Register</h1>
-      <form v-on:submit.prevent="onSubmit" class="check__form" action="">
-        <input
-          id="tn1"
-          min="1000000"
-          type="number"
-          placeholder="Telethone Number"
-          required
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          minlength="6"
-          id="pc1"
-          required
-        />
-        <input
-          type="password"
-          minlength="6"
-          placeholder="Confirm Password"
-          id="pc2"
-          required
-        />
-        <button type="submit" @click="Register()">Submit</button>
-      </form>
-    </div>
-  </div>
-  <p>Getting Your own account on Our web-site grants You a discount depending on the number of orders</p>
+    <p>
+      Getting Your own account on Our web-site grants You a discount depending
+      on the number of orders
+    </p>
+  </main>
 </template>
 
 <script>
@@ -122,17 +127,18 @@ export default {
           if (response.data.error) {
             vm.showModal(false, "Wrong number or password!");
           } else {
-            router.replace("food");
+            router.replace("userPage");
             vm.$store.commit("sign");
+            vm.$store.commit("userSignLogin", tn);
+            console.log(tn);
             // vm.showModal(true, "Success!");
             document.getElementById("signUpBu").innerHTML = "Exit";
           }
-          //console.log(response.data.error);
         });
     },
     showModal(type, message) {
       var modal = document.getElementById("modal_window__signUp");
-      modal.style.display = 'block';
+      modal.style.display = "block";
       modal.innerHTML = message;
 
       if (type) {
@@ -143,14 +149,19 @@ export default {
       modal.classList.add("show");
       setTimeout(function () {
         modal.classList.remove("show");
-         modal.style.display = 'none';
+        modal.style.display = "none";
       }, 2000);
     },
   },
 };
 </script>
 
-<style scoped>
+<style>
+main{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
 .check__form input {
   padding: 10px;
   width: 200px;
@@ -165,15 +176,15 @@ export default {
   align-items: center;
   gap: 10%;
   padding: 100px 20px;
-  margin-bottom: 200px;
 }
 @media (max-width: 600px) {
   .check {
     flex-direction: column;
     padding: 40px 20px;
-     margin-bottom: 50px;
+    margin-bottom: 50px;
   }
 }
+
 #modal_window__signUp {
   display: none;
   position: fixed;

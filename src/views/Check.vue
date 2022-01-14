@@ -153,6 +153,7 @@ export default {
     initCartInfo() {
       this.isSignUp = this.$store.getters.sign;
       if (this.isSignUp){
+        console.log('tr');
         this.getUserDiscount();
       }
       this.cart = this.$store.getters.cart;
@@ -190,27 +191,23 @@ export default {
       return total;
     },
     startTimer() {
-      //console.log('click');
       if (((this.tel_num != ""  && this.tel_num.length>6) || this.isSignUp) && this.address != "")
         if (this.cart.length > 0) {
-          
+                    document.getElementById("BuTimer").disabled = true;
 
-          // УБРААААТЬ!!!
-          document.getElementById("BuTimer").disabled = true;
-
-          //params.push({"isSignUp": this.isSignUp});
+      
           var items = [];
           this.cart.forEach(element => {
             items.push({"id": element.id, "count": element.count});
           });
-          //params.push({"items": items});
-          var params = {"items": items, "info": this.isSignUp};
+          console.log(this.$store.getters.sign);
+          var params = {"items": items, "info": this.$store.getters.sign, "address": this.address};
           axios
           .get(
             `http://localhost/afanasyev-project-php/insert_data.php`,{params}
           )
           .then(function (response) {
-            //console.log(response);
+            console.log(response);
           });
       
           this.$store.commit("clear");
@@ -242,7 +239,7 @@ export default {
           `http://localhost/afanasyev-project-php/get_user_discount.php`
         )
         .then(function (response) {
-          //console.log(response.data);
+          console.log(response.data);
           vm.discount = response.data.discount;
         });
     },

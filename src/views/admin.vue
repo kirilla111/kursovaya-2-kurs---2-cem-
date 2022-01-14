@@ -1,5 +1,5 @@
 <template>
-  <div class="main">
+  <main class="main">
     <h1 class="form__title">Administrator page</h1>
     <div class="modal" id="modal_window"></div>
     <div class="info" v-if="isAutorized">
@@ -124,7 +124,7 @@
         </div>
       </form>
     </div>
-  </div>
+  </main>
 </template>
 
 <script>
@@ -379,7 +379,6 @@ h1 {
   flex-direction: column;
   gap: 20px;
   justify-content: space-between;
-  margin-bottom: 120px;
 }
 .container__options {
   margin-top: 30px;
