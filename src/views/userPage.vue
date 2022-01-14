@@ -1,6 +1,6 @@
 <template>
   <main>
-    <div id="modal_window__signUp"></div>
+    <div id="modal_window__edit"></div>
     <h1>Welcome to Your personal user Page</h1>
     <div class="main__info">
       <form class="info__item">
@@ -42,7 +42,6 @@ export default {
       axios
         .get(`http://localhost/afanasyev-project-php/get_user_discount.php`)
         .then(function (response) {
-          console.log(response.data);
           vm.discount = `${response.data.discount} %`;
         });
     },
@@ -54,22 +53,34 @@ export default {
 
       this.showModal(true, "Succesfully!");
 
-      var params = { tel: this.tel_number};
-      axios
-        .get("http://localhost/afanasyev-project-php/edit_user_login.php", {
-          params,
-        })
-      console.log(this.tel_number);
+      var params = { tel: this.tel_number };
+      this.$store.commit("userSignLogin", this.tel_number);
+      axios.get("http://localhost/afanasyev-project-php/edit_user_login.php", {
+        params,
+      });
     },
     editPassword() {
-      console.log(this.password);
+      if (this.password === "" || this.password.length < 6) {
+        this.showModal(false, "Check sintax!");
+        return;
+      }
+
+      this.showModal(true, "Succesfully!");
+
+      var params = { pass: this.password };
+      axios.get(
+        "http://localhost/afanasyev-project-php/edit_user_password.php",
+        {
+          params,
+        }
+      );
     },
     getUserInfo() {
       this.tel_number = this.$store.getters.userLogin;
       this.getUserDiscount();
     },
     showModal(type, message) {
-      var modal = document.getElementById("modal_window__signUp");
+      var modal = document.getElementById("modal_window__edit");
       modal.style.display = "block";
       modal.innerHTML = message;
 
@@ -101,7 +112,7 @@ export default {
   width: 500px;
   justify-content: space-between;
 }
-#modal_window__signUp {
+#modal_window__edit {
   height: auto;
   color: white;
 }
