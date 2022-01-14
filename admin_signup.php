@@ -1,4 +1,6 @@
 <?php
+    header('Access-Control-Allow-Origin: *');
+    header("Access-Control-Allow-Methods: GET, OPTIONS");
     session_start();
 
     $conn = include 'get_conn.php';

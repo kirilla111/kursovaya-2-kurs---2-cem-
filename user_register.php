@@ -1,4 +1,4 @@
-<?php
+ти<?php
     session_start();
     
     $conn = include 'get_conn.php';

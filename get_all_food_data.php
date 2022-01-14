@@ -1,4 +1,6 @@
 <?php
+    header('Access-Control-Allow-Origin: *');
+    header("Access-Control-Allow-Methods: GET, OPTIONS");
     $conn = include 'get_conn.php';
 
     $sql = $conn->query("select fi.*,bi.title as brand,bi.rating from food_info fi 
