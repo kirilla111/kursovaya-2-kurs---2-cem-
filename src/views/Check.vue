@@ -1,4 +1,5 @@
 <template>
+<main>
   <div class="flex-container">
     <div class="flex-container__print">
       <img
@@ -85,6 +86,7 @@
       Total amount with personal discount: {{ getSummWithDiscount() }}$
     </h2>
   </div>
+  </main>
 </template>
 
 <script>
@@ -97,52 +99,7 @@ export default {
       address: "",
       cart: [
         {
-        //   brand: "MacDonalds",
-        //   description:
-        //     "qwewqeytwqyteuwuqyt asghdghasjhjdgas iot uoireoti erh j hgfdkj hasd agvsj uhrfguie rhfgu",
-        //   food_name: "Set #2",
-        //   id: "4",
-        //   image_url:
-        //     "https://i1.wp.com/4ao3uo2687rn3u1b6w2vblpy-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/15735694_web1_190125-WLT-FoodGuide.jpg",
-        //   price: "11.99",
-        //   rating: "0",
-        //   count: 2,
-        // },
-        // {
-        //   brand: "MacDonalds",
-        //   description:
-        //     "qwewqeytwqyteuwuqyt asghdghasjhjdgas iot uoireoti erh j hgfdkj hasd agvsj uhrfguie rhfgu",
-        //   food_name: "Set #2",
-        //   id: "4",
-        //   image_url:
-        //     "https://i1.wp.com/4ao3uo2687rn3u1b6w2vblpy-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/15735694_web1_190125-WLT-FoodGuide.jpg",
-        //   price: "11.99",
-        //   rating: "0",
-        //   count: 1,
-        // },
-        // {
-        //   brand: "MacDonalds",
-        //   description:
-        //     "qwewqeytwqyteuwuqyt asghdghasjhjdgas iot uoireoti erh j hgfdkj hasd agvsj uhrfguie rhfgu",
-        //   food_name: "Set #2",
-        //   id: "4",
-        //   image_url:
-        //     "https://i1.wp.com/4ao3uo2687rn3u1b6w2vblpy-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/15735694_web1_190125-WLT-FoodGuide.jpg",
-        //   price: "11.99",
-        //   rating: "0",
-        //   count: 1,
-        // },
-        // {
-        //   brand: "MacDonalds",
-        //   description:
-        //     "qwewqeytwqyteuwuqyt asghdghasjhjdgas iot uoireoti erh j hgfdkj hasd agvsj uhrfguie rhfgu",
-        //   food_name: "Set #2",
-        //   id: "4",
-        //   image_url:
-        //     "https://i1.wp.com/4ao3uo2687rn3u1b6w2vblpy-wpengine.netdna-ssl.com/wp-content/uploads/2019/02/15735694_web1_190125-WLT-FoodGuide.jpg",
-        //   price: "11.99",
-        //   rating: "0",
-        //   count: 1,
+      
         },
       ],
       isSignUp: false,
@@ -195,13 +152,13 @@ export default {
         if (this.cart.length > 0) {
                     document.getElementById("BuTimer").disabled = true;
 
-      
+          var date = document.getElementById("deliverTimeInput").value;
           var items = [];
           this.cart.forEach(element => {
             items.push({"id": element.id, "count": element.count});
           });
           console.log(this.$store.getters.sign);
-          var params = {"items": items, "info": this.$store.getters.sign, "address": this.address};
+          var params = {"items": items, "info": this.$store.getters.sign, "address": this.address, "order_date": date };
           axios
           .get(
             `http://localhost/afanasyev-project-php/insert_data.php`,{params}
@@ -263,7 +220,6 @@ export default {
   margin-right: 10%;
   justify-content: center;
   gap: 10%;
-  margin-bottom: 150px;
 }
 .item__row {
   display: flex;

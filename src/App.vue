@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <m-header />
-
+    
     <m-footer id="mFooter" />
   </div>
 </template>
@@ -9,7 +9,7 @@
 <script>
 import mFooter from "./components/m-footer.vue";
 import mHeader from "./components/m-header.vue";
-//import router from "../router/index";
+
 
 export default {
   name: "app",
@@ -26,7 +26,7 @@ body {
   margin: 0;
   height: 100%;
 }
-.wrapper{
+.wrapper {
   min-height: 100%;
   display: flex;
   flex-direction: column;
@@ -53,7 +53,7 @@ body {
 ::placeholder {
   font-family: "Open Sans", sans-serif;
 }
-html{
+html {
   height: 100%;
 }
 button {
@@ -68,5 +68,14 @@ button {
 }
 button:hover {
   background-color: var(--hover-color);
+}
+.main__dashboard_container{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin: 20px;
+}
+.dashboard_container__diagramm{
+  margin: 30px;
 }
 </style>

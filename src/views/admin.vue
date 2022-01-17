@@ -16,11 +16,18 @@
           Cancel
         </button>
         <div style="padding: 10px; text-align: right">
-          Total: {{ filtered_food_info.length }}
+          Total: {{ getTotal() }}
         </div>
+        <button
+          @click="goToCouriers()"
+          id="toCourButton"
+          class="actions__button"
+        >
+          Couriers
+        </button>
       </div>
 
-      <div class="info__grid">
+      <div class="info__grid" v-if="!toCouriers">
         <div class="grid__head">
           <p class="head__cell corner-left">Id</p>
           <p class="head__cell">Name</p>
@@ -70,7 +77,7 @@
           />
           <input :id="5 + '' + index" class="row__cell" v-model="food.brand" />
           <input :id="6 + '' + index" class="row__cell" v-model="food.image" />
-          <div  @click="editRow(index)" class="row__cell green">
+          <div @click="editRow(index)" class="row__cell green">
             <img
               src="https://i.stack.imgur.com/F2zuF.png"
               height="30"
@@ -78,6 +85,37 @@
             />
           </div>
           <div @click="deleteRow(index)" class="row__cell red">
+            <img
+              src="http://cdn.onlinewebfonts.com/svg/download_216356.png"
+              height="32"
+              alt="Delete"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="info__grid" v-else>
+        <div class="grid__head">
+          <p class="head__cell corner-left">Login</p>
+          <p class="head__cell">Password</p>
+          <p class="head__cell green">Edit</p>
+          <p class="head__cell corner-right red">Remove</p>
+        </div>
+        <div
+          class="grid__row"
+          v-bind:class="{ gray: index % 2 == 0 }"
+          v-for="(item, index) in courier_info"
+          :key="index"
+        >
+          <input class="row__cell" v-model="item.login"/>
+          <input class="row__cell" v-model="item.password" />
+          <div @click="editRowCourier(index)" class="row__cell green">
+            <img
+              src="https://i.stack.imgur.com/F2zuF.png"
+              height="30"
+              alt="Edit"
+            />
+          </div>
+          <div @click="deleteRowCourier(index)" class="row__cell red">
             <img
               src="http://cdn.onlinewebfonts.com/svg/download_216356.png"
               height="32"
@@ -136,7 +174,14 @@ export default {
   data() {
     return {
       food_info: [],
+      courier_info: [
+        // {
+        //   login: "cour",
+        //   password: "pwd",
+        // },
+      ],
       isAutorized: false,
+      toCouriers: false,
       filter: "",
     };
   },
@@ -153,35 +198,41 @@ export default {
             x.category.toLowerCase().includes(keyword)) &&
           x.updated != "3"
       );
-      // return this.food_info.filter(function (elem) {
-      //   if (filter === '') return true;
-      //   else return elem.food_name.toLowerCase().indexOf(filter) > -1;
-      // });
     },
   },
   mounted: function () {
     //this.getTableData();
   },
-  // pass = 0;
-  // update = 1;
-  // insert = 2;
-  // delete = 3;
+
   methods: {
+    getTotal(){
+      if (this.toCouriers) return this.courier_info.length;
+      else return this.food_info.length;
+    },
+    editRowCourier(index) {
+      this.showModal(true, "Successfully!");
+    },
+    deleteRowCourier(index) {
+      this.courier_info.splice(index, 1);
+      this.showModal(true, "Deleted!");
+    },
+    goToCouriers() {
+      this.toCouriers = !this.toCouriers;
+
+      if (this.toCouriers) document.getElementById("toCourButton").innerHTML = "Food";
+      else document.getElementById("toCourButton").innerHTML = "Couriers";
+      
+    },
     findIndex(id) {
       var index = 0;
       this.food_info.forEach((element) => {
         if (id === element.id) return index;
         index++;
       });
-
-      // return this.food_info.filter(function (elem) {
-      //   if (filter === '') return true;
-      //   else return elem.food_name.toLowerCase().indexOf(filter) > -1;
-      // });
     },
     editRow(index) {
       //console.log(index);
-
+      
       var id = document.getElementById(`${0}${index}`).value;
       var food_name = document.getElementById(`${1}${index}`).value;
       var description = document.getElementById(`${2}${index}`).value;
@@ -216,56 +267,81 @@ export default {
       item.image = image;
 
       this.food_info[index].food_name = food_name;
-      this.showModal(true,'Successfully!');
+      this.showModal(true, "Successfully!");
     },
     cancelChanges() {
       this.getTableData();
     },
     saveChanges() {
-      var response = confirm("Are You sure?");
-      var params = { table: this.food_info };
-      //console.log({ params });
-      let vm = this;
-      if (response) {
-        axios
-          .get(
-            "http://localhost/afanasyev-project-php/admin_actions.php?action=write",
-            { params }
-          )
-          .then(function (response) {
-            //console.log(response);
-            //console.log(response.data);
-            var e = response.data.errors;
-            var u = response.data.updates;
-            //console.log(vm.isAutorized);
-            if (e > 0) {
-              vm.showModal(false, `Errors: ${e}, Updates ${u}`);
-            }
-            else{
-              vm.showModal(true, `Errors: ${e}, Updates ${u}`);
-            }
-            vm.getTableData();
-          });
-      } else {
+      if (this.toCouriers){
+        var response = confirm("Are You sure?");
+        var params = { table: this.courier_info };
+        let vm = this;
+        if (response) {
+          axios
+            .get(
+              "http://localhost/afanasyev-project-php/admin_actions_courier.php?action=write",
+              { params }
+            )
+            .then(function (response) {
+              var e = response.data.errors;
+              var u = response.data.updates;
+              if (e > 0) {
+                vm.showModal(false, `Errors: ${e}, Updates ${u}`);
+              } else {
+                vm.showModal(true, `Errors: ${e}, Updates ${u}`);
+              }
+              vm.getTableData();
+            });
+        }
+      }
+      else{
+        var response = confirm("Are You sure?");
+        var params = { table: this.food_info };
+        //console.log({ params });
+        let vm = this;
+        if (response) {
+          axios
+            .get(
+              "http://localhost/afanasyev-project-php/admin_actions.php?action=write",
+              { params }
+            )
+            .then(function (response) {
+              //console.log(response);
+              //console.log(response.data);
+              var e = response.data.errors;
+              var u = response.data.updates;
+              //console.log(vm.isAutorized);
+              if (e > 0) {
+                vm.showModal(false, `Errors: ${e}, Updates ${u}`);
+              } else {
+                vm.showModal(true, `Errors: ${e}, Updates ${u}`);
+              }
+              vm.getTableData();
+            });
+        } else {
+        }
       }
     },
     deleteRow(index) {
       this.filtered_food_info[index].updated = "3";
-      this.showModal(true,'Deleted!');
+      this.showModal(true, "Deleted!");
     },
     addNewRow() {
-      this.food_info[this.food_info.length] = {
-        id: `${parseInt(this.food_info[this.food_info.length - 1].id) + 1}`,
-        food_name: "",
-        description: "",
-        category: "",
-        price: "",
-        brand: "",
-        image: "",
-        updated: "2",
-      };
-      //console.log(this.food_info);
-      //console.log(this.food_info[this.food_info-1]);
+      if (this.toCouriers){
+        this.courier_info.push({login: '', password: ''})
+      }else{
+        this.food_info[this.food_info.length] = {
+          id: `${parseInt(this.food_info[this.food_info.length - 1].id) + 1}`,
+          food_name: "",
+          description: "",
+          category: "",
+          price: "",
+          brand: "",
+          image: "",
+          updated: "2",
+        };
+      }
     },
     showModal(type, message) {
       var modal = document.getElementById("modal_window");
@@ -287,7 +363,7 @@ export default {
       let password = document.getElementById("admin_password").value;
 
       if (login == "" || password == "") {
-        this.showModal(false,'Error!');
+        this.showModal(false, "Error!");
         return;
       }
 
@@ -303,9 +379,9 @@ export default {
             vm.isAutorized = response.data.session;
             vm.getTableData();
             //console.log(response);
-            vm.showModal(true,'Welcome!');
+            vm.showModal(true, "Welcome!");
           } else {
-            vm.showModal(false,'Error!');
+            vm.showModal(false, "Error!");
           }
           //console.log(vm.isAutorized);
         });
@@ -322,6 +398,9 @@ export default {
             this.errorMsg = response.data.message;
           } else {
             vm.food_info = response.data.food_info;
+            vm.courier_info = response.data.courier_info;
+
+            console.log(vm.courier_info);
           }
         });
     },
@@ -340,7 +419,6 @@ export default {
   border-radius: 10px;
   border: 1px solid var(--border-color-primary);
   margin-top: 30px;
-  margin-bottom: 22%;
 }
 .form__item {
   display: flex;
@@ -374,12 +452,6 @@ h1 {
   justify-content: space-between;
 }
 
-.main {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  justify-content: space-between;
-}
 .container__options {
   margin-top: 30px;
   text-align: center;
@@ -393,6 +465,11 @@ h1 {
   color: white;
   display: grid;
   gap: 2px;
+}
+@media (max-width: 770px) {
+  .info__actions {
+    flex-direction: column !important;
+  }
 }
 .grid__head {
   display: flex;
@@ -425,6 +502,7 @@ h1 {
   padding: 10px 0px;
   margin: 0px;
   margin-top: 0px;
+  border: 0px;
   background-color: var(--color-primary);
   text-align: center;
   font-size: 17px;
@@ -468,8 +546,10 @@ h1 {
   color: white;
   opacity: 0;
   border-radius: 10px;
+  visibility: hidden;
 }
 .show {
+  visibility: visible;
   animation: showModal 2s 1;
   animation-fill-mode: forwards;
 }
@@ -499,11 +579,21 @@ h1 {
 .gray .row__cell:hover {
   background-color: var(--color-primary);
 }
-button{
+button {
   padding: 15px;
-  width: 80px;
+  /* width: 80px; */
 }
-.main__container{
+.main__container {
   border-top: 0px;
+}
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: space-between;
+  margin-bottom: 22%;
+}
+.grid__head p {
+  color: white;
 }
 </style>
