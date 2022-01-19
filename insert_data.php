@@ -30,7 +30,7 @@
         $json = json_decode($item,true);
         $count = $json['count'];
         $id = $json['id'];
-        $date = date('Y-m-d H:i:s');
+        $date = $params["order_date"];
         $stmt = $conn->prepare("INSERT INTO orders(order_date,user_id,food_id,food_quantity,address) 
         values ('$date',$user_id,$id,$count,'$address')");
 

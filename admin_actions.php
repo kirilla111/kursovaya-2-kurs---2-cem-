@@ -18,6 +18,51 @@
             $action = $_GET['action'];
         }
         
+
+        if ($action == 'diagramm_info'){
+            $sql = $conn->query("select bi.title , count(brand_id) revenue from food_info fi 
+                                    join brands_info bi on bi.id = fi.brand_id 
+                                        group by brand_id ");
+            $data = array();
+            while ($row = $sql->fetch_assoc()){
+                array_push($data,$row);
+            }
+            $result['brand_revenue'] = $data;
+
+           
+            $sql = $conn->query("select fc.title , count(brand_id) revenue from food_info fi 
+                                    join food_category fc on fc.id = fi.category_id 
+                                        group by category_id  ");
+            $data = array();
+            while ($row = $sql->fetch_assoc()){
+                array_push($data,$row);
+            }
+            $result['category_revenue'] = $data;
+            
+
+            $sql = $conn->query("select title,rating rating from brands_info bi ");
+            $data = array();
+            while ($row = $sql->fetch_assoc()){
+                array_push($data,$row);
+            }
+            $result['brand_rating'] = $data;
+
+            $sql = $conn->query(" select CONCAT( month(order_date), '.' ,year(order_date)) \"date\" ,count(order_date) \"count\" from orders o 
+                                        where status = 'delivered' group BY month(order_date) ");
+            $data = array();
+            while ($row = $sql->fetch_assoc()){
+                array_push($data,$row);
+            }
+            $result['order_info'] = $data;
+
+            echo json_encode($result);
+            return;
+           
+            // brand_revenue: [],
+            // brand_rating: [],
+            // category_revenue: [],
+        }
+
         if ($action == 'read'){
             $sql = $conn->query("SELECT f1.id,food_name,f1.description,price,bi.title brand,f2.title category,f1.image_url as image,false as updated FROM $table_name f1
                                     JOIN food_category f2 on f1.category_id = f2.id
@@ -27,6 +72,18 @@
                 array_push($data,$row);
             }
             $result['food_info'] = $data;
+
+
+            $sql = $conn->query("select * from couriers ");
+
+            $data = array();
+            while ($row = $sql->fetch_assoc()){
+                array_push($data,$row);
+            }
+            
+            $result['courier_info'] = $data;
+
+
             echo json_encode($result);
 
         }else if ($action == 'write'){
