@@ -95,8 +95,9 @@ export default {
           if (response.data.error) {
             vm.showModal(false, "This number is already occupied!");
           } else {
-            router.replace("food");
+            router.replace("userPage");
             vm.$store.commit("sign");
+             vm.$store.commit("userSignLogin", tn);
             // vm.showModal(true, "Success!");
             document.getElementById("signUpBu").innerHTML = "Exit";
           }

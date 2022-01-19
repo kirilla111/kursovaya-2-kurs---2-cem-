@@ -3,6 +3,29 @@
     <h1 class="form__title">Administrator page</h1>
     <div class="modal" id="modal_window"></div>
     <div class="info" v-if="isAutorized">
+       <div class="info__dashboard_container">
+        <button class="dashboard_container__button" @click="showDashboard()">Show Dashbord</button>
+        <div  v-if="toShowDashboard" class="dashboard_container__diagramm">
+          <!-- <line-chart :data="diagramm_info"></line-chart> -->
+          <div class="diagramm__pie_container">
+            <div class="pie_container__pie_chart">
+              <div class="pie_chart__">Brand Revenue</div>
+              <pie-chart :data="brand_revenue"></pie-chart>
+            </div>
+            <div class="pie_container__pie_chart">
+              <div class="pie_chart__">Brand Rating</div>
+              <pie-chart :data="brand_rating"></pie-chart>
+            </div>
+            <div class="pie_container__pie_chart">
+              <div class="pie_chart__">Category Revenue</div>
+              <pie-chart :data="category_revenue"></pie-chart>
+            </div>
+          </div>
+          
+          <line-chart :data="order_info"></line-chart>
+        </div>
+      </div>
+
       <div class="info__actions">
         <input
           class="actions__search"
@@ -180,8 +203,13 @@ export default {
         //   password: "pwd",
         // },
       ],
+      brand_revenue: [],
+      order_info: [],
+      brand_rating: [],
+      category_revenue: [],
       isAutorized: false,
       toCouriers: false,
+      toShowDashboard: false,
       filter: "",
     };
   },
@@ -271,6 +299,47 @@ export default {
     },
     cancelChanges() {
       this.getTableData();
+    },
+     showDashboard(){
+        let vm = this;
+        axios
+        .get(
+          "http://localhost/afanasyev-project-php/admin_actions.php?action=diagramm_info")
+        .then(function (response) {
+          console.log(response.data);
+          var data = response.data.brand_revenue;
+          vm.brand_revenue = [];
+          data.forEach(element => {
+            vm.brand_revenue.push([`${element.title}`, element.revenue])
+          });
+
+          data = response.data.brand_rating;
+          vm.brand_rating = [];
+          data.forEach(element => {
+            vm.brand_rating.push([`${element.title}`, element.rating])
+          });
+
+          data = response.data.category_revenue;
+          vm.category_revenue = [];
+          data.forEach(element => {
+            vm.category_revenue.push([`${element.title}`, element.revenue])
+          });
+
+          data = response.data.order_info;
+          vm.order_info = [];
+          data.forEach(element => {
+            vm.order_info.push([`${element.date}`, element.count])
+          });
+            // : [],
+            // : [],
+          
+
+         
+        });
+        
+        this.toShowDashboard = !this.toShowDashboard;
+
+
     },
     saveChanges() {
       if (this.toCouriers){

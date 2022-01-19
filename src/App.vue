@@ -77,5 +77,20 @@ button:hover {
 }
 .dashboard_container__diagramm{
   margin: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+.diagramm__pie_container{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 10%;
+}
+@media  (max-width: 1100px) {
+   .diagramm__pie_container{
+    flex-direction: column;
+    gap: 30px;
+  }
 }
 </style>
