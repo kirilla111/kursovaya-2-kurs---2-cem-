@@ -145,7 +145,10 @@ export default {
       this.cart.forEach((element) => {
         total += element.count * parseFloat(element.price);
       });
-      return total;
+      return round(total);
+    },
+    round(number){
+      return +number.toFixed(2);
     },
     startTimer() {
       if (((this.tel_num != ""  && this.tel_num.length>6) || this.isSignUp) && this.address != "")
@@ -203,7 +206,7 @@ export default {
     getSummWithDiscount(){
       var discount = parseFloat(this.discount);
       var summ = this.getTotalSumm();
-      return summ*((100-discount)/100);
+      return round(summ*((100-discount)/100));
     }
   },
   mounted() {
