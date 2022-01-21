@@ -145,7 +145,7 @@ export default {
       this.cart.forEach((element) => {
         total += element.count * parseFloat(element.price);
       });
-      return round(total);
+      return this.round(total);
     },
     round(number){
       return +number.toFixed(2);
@@ -206,7 +206,7 @@ export default {
     getSummWithDiscount(){
       var discount = parseFloat(this.discount);
       var summ = this.getTotalSumm();
-      return round(summ*((100-discount)/100));
+      return this.round(summ*((100-discount)/100));
     }
   },
   mounted() {
